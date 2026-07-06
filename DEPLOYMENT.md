@@ -1,8 +1,7 @@
 # Deployment Guide
 
-This guide explains how to build the Johannesburg Nature-based Solutions Impact Dashboard and publish it to a live, shareable URL. The site is a static build, so it can be hosted almost anywhere. Pick the option that fits your needs.
+This guide explains how to build the Johannesburg Nature-based Solutions Impact Dashboard and deploy it within a Microsoft compatible environment. The site is a static build, so it can be hosted on City of Johannesburg infrastructure or Azure with no server runtime.
 
-- **Fastest live link for the proposal:** Netlify or Vercel drop in deploy (a few minutes)
 - **Recommended for the City of Johannesburg:** Azure Static Web Apps (Microsoft compatible)
 - **Portable or on premises:** Docker image behind nginx
 
@@ -23,40 +22,11 @@ If `npm run build` succeeds and `npm run preview` shows the site, you are ready 
 
 ---
 
-## Option A. Netlify (fastest public link)
-
-Netlify gives you a free public URL such as `https://your-site-name.netlify.app` in minutes.
-
-### A1. Drag and drop (no account setup beyond signup)
-1. Run `npm run build` to produce `dist/`.
-2. Go to https://app.netlify.com/drop
-3. Drag the `dist/` folder onto the page.
-4. Netlify returns a live URL immediately. Copy it into the cover letter and submission email.
-
-### A2. Connected to Git (auto rebuilds on every push)
-1. Push this `prototype/` folder to a GitHub repository.
-2. In Netlify, choose Add new site, then Import an existing project, and select the repo.
-3. Set the build command to `npm run build` and the publish directory to `dist`.
-4. Deploy. Netlify rebuilds automatically whenever you push.
-
-A `netlify.toml` is included so the settings are detected automatically.
-
----
-
-## Option B. Vercel (fast public link, Git based)
-
-1. Push this `prototype/` folder to GitHub.
-2. Go to https://vercel.com/new and import the repository.
-3. Vercel detects Astro. Confirm the build command `npm run build` and output directory `dist`.
-4. Deploy. You get a live URL such as `https://your-site.vercel.app`.
-
----
-
-## Option C. Azure Static Web Apps (recommended for the City)
+## Option A. Azure Static Web Apps (recommended for the City)
 
 This is the Microsoft compatible path and the natural fit for City of Johannesburg infrastructure. A `staticwebapp.config.json` is already included for routing, headers, and the fallback page.
 
-### C1. Using the Azure Portal and GitHub
+### A1. Using the Azure Portal and GitHub
 1. Push this `prototype/` folder to a GitHub repository.
 2. In the Azure Portal, create a resource, then choose Static Web App.
 3. Sign in and select the repository and branch.
@@ -66,7 +36,7 @@ This is the Microsoft compatible path and the natural fit for City of Johannesbu
    - Output location: `dist`
 5. Create. Azure adds a GitHub Actions workflow and builds the site. When it finishes you get a URL such as `https://your-app.azurestaticapps.net`.
 
-### C2. Using the Azure CLI (Static Web Apps CLI)
+### A2. Using the Azure CLI (Static Web Apps CLI)
 ```bash
 npm install -g @azure/static-web-apps-cli
 npm run build
@@ -79,7 +49,7 @@ In the Static Web App resource, open Custom domains and add the City domain, the
 
 ---
 
-## Option D. Docker (portable or on premises)
+## Option B. Docker (portable or on premises)
 
 Use this to run the dashboard on Azure App Service, Azure Container Apps, or City data centre infrastructure with no code changes. A `Dockerfile` and `nginx.conf` are included.
 
