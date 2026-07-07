@@ -1,0 +1,52 @@
+---
+// Lightweight, pure SVG sparkline. No JavaScript and no charting library, so it
+// renders statically and stays fast on low bandwidth connections. Used to give
+// every indicator card its own small visual, as the SUNCASA indicator model asks.
+interface Props {
+  values: number[];
+  color?: string;
+  ariaLabel?: string;
+}
+const { values, color = "#3B7EA1", ariaLabel = "Trend sparkline" } = Astro.props;
+
+const width = 100;
+const height = 30;
+const padX = 2;
+const padY = 4;
+
+const min = Math.min(...values);
+const max = Math.max(...values);
+const span = max - min || 1;
+const stepX = values.length > 1 ? (width - padX * 2) / (values.length - 1) : 0;
+
+const points = values.map((v, i) => {
+  const x = padX + i * stepX;
+  // Flat series sits in the vertical middle rather than at an edge.
+  const y = max === min ? height / 2 : height - padY - ((v - min) / span) * (height - padY * 2);
+  return { x, y };
+});
+
+const path = points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+const last = points[points.length - 1];
+---
+
+<svg
+  viewBox={`0 0 ${width} ${height}`}
+  width="100%"
+  height={height}
+  preserveAspectRatio="none"
+  role="img"
+  aria-label={ariaLabel}
+  class="block"
+>
+  <polyline
+    points={path}
+    fill="none"
+    stroke={color}
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    vector-effect="non-scaling-stroke"
+  />
+  <circle cx={last.x} cy={last.y} r="2.4" fill={color} />
+</svg>

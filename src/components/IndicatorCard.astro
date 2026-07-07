@@ -1,8 +1,10 @@
 ---
 import { t } from "../i18n";
 import type { Indicator } from "../data";
+import { getPillar, timeseries } from "../data";
 import TrendPill from "./TrendPill.astro";
 import CoDesignTag from "./CoDesignTag.astro";
+import Sparkline from "./Sparkline.astro";
 
 interface Props {
   indicator: Indicator;
@@ -11,6 +13,24 @@ const { indicator } = Astro.props;
 const value = indicator.latestValue;
 const display = value === null ? "n/a" : Intl.NumberFormat("en").format(value);
 const goodDirection = indicator.id === "flood_extent" || indicator.id === "streamflow" ? "down" : "up";
+const accent = getPillar(indicator.pillar).accent;
+
+// Give every indicator its own visual, as the SUNCASA indicator model asks.
+// Prefer a real time series. Otherwise draw an honest baseline to latest line,
+// but only when there is a genuine direction to show, so a stable indicator is
+// never drawn as a slope. Everything else falls back to a short caption.
+const series = timeseries[indicator.id];
+let sparkValues: number[] | null = null;
+if (series && series.length >= 2) {
+  sparkValues = series.map((p) => p.value);
+} else if (
+  indicator.baselineValue !== null &&
+  indicator.latestValue !== null &&
+  indicator.trend !== "flat" &&
+  indicator.baselineValue !== indicator.latestValue
+) {
+  sparkValues = [indicator.baselineValue, indicator.latestValue];
+}
 ---
 
 <article class="flex flex-col rounded-md border border-rule bg-paper p-6">
@@ -24,9 +44,23 @@ const goodDirection = indicator.id === "flood_extent" || indicator.id === "strea
 
   <h3 class="headline mt-3 text-lg text-charcoal" data-i18n={`ind.${indicator.id}.name`}>{indicator.name.en}</h3>
 
-  <div class="mt-4 flex items-baseline gap-2 border-b border-rule pb-4">
+  <div class="mt-4 flex items-baseline gap-2">
     <span class="headline tnum text-4xl text-emerald">{display}</span>
     <span class="text-sm text-charcoal/60">{indicator.unit}</span>
+  </div>
+
+  <!-- Per indicator visual, as required by the SUNCASA indicator model. -->
+  <div class="mt-3 border-b border-rule pb-4">
+    <p class="eyebrow text-charcoal/45" data-i18n="indicator.trend">Trend</p>
+    {sparkValues ? (
+      <div class="mt-1.5">
+        <Sparkline values={sparkValues} color={accent} ariaLabel={`${indicator.name.en} trend`} />
+      </div>
+    ) : (
+      <p class="mt-1 text-xs text-charcoal/55" data-i18n="indicator.noTrend">
+        Trend view available once the SUNCASA data catalogue is confirmed.
+      </p>
+    )}
   </div>
 
   <div class="mt-4 space-y-3 text-sm">

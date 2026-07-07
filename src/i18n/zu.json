@@ -36,6 +36,7 @@
   "indicator.frequency": "Ukuvuselelwa kaningi",
   "indicator.caveat": "Izexwayiso nemikhawulo",
   "indicator.proposed": "Inkomba ehlongozwayo, ezoqinisekiswa ngesikhathi sokuqala",
+  "indicator.noTrend": "Umbukiso wethrendi uzotholakala uma ikhathalogi yedatha ye-SUNCASA isiqinisekisiwe.",
   "codesign.title": "Yakhelwe nawe, hhayi ngenxa yakho",
   "codesign.body": "Le phrothothayiphu iyisiqalo sesigaba sokuqala. Izinkomba eziphawulwe njengezihlongozwayo ziyizinketho zokuxoxwa. Impendulo yababambiqhaza izonquma iqoqo lokugcina.",
   "codesign.tag": "Umbono wababambiqhaza uyakwakha lokhu",

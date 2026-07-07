@@ -35,6 +35,7 @@
   "indicator.frequency": "Update frequency",
   "indicator.caveat": "Caveats and limitations",
   "indicator.proposed": "Proposed indicator, to be confirmed during Inception",
+  "indicator.noTrend": "Trend view available once the SUNCASA data catalogue is confirmed.",
   "codesign.title": "Shaped with you, not for you",
   "codesign.body": "This prototype is a starting point for the Inception Phase. Indicators marked as proposed are options for discussion. Stakeholder feedback from the City of Johannesburg, IISD, and community partners will decide the final set.",
   "codesign.tag": "Stakeholder input shapes this",
