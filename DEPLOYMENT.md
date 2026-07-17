@@ -73,14 +73,6 @@ Then create an Azure Container App or Web App for Containers that pulls this ima
 
 ---
 
-## After you have a live URL
-
-1. Paste the URL into these files, replacing the `[link to deployed prototype]` placeholder:
-   - `submission/COVER_LETTER.md`
-   - `submission/SUBMISSION_EMAIL.md`
-2. If you also share the source, replace `[link to repository or attached archive]` in the email with your repository link.
-3. Do a final check on a phone and on a slow connection, since low bandwidth and mobile use are explicit requirements.
-
 ## Updating the data before a deploy
 
 If you change figures in `data/`, regenerate the typed JSON and rebuild before deploying:
